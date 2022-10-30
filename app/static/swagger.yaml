@@ -1,0 +1,30 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: API for Carnegie Mellon Success Predictor
+  description: Various (maybe just one) endpoint for communicating with a server
+    for predicting the success of CMU applicants
+tags:
+- name: Predictors
+paths:
+  /predict:
+    get:
+      tags:
+      - Predictors
+      description: predicts stuff
+      parameters:
+        - name: age
+          in: query
+          type: integer
+          description: The age of the applicant as an integer
+        - name: health
+          in: query
+          type: integer
+          description: The health of the applicant as an integer in 0-10 scale
+        - name: absenses
+          in: query
+          type: integer
+          description: The number of absenses of this applicant
+      responses:
+        200:
+          description: Successful response 

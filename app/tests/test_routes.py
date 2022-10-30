@@ -45,7 +45,7 @@ def test_predict_route():
 
         assert response.status_code == 400
 
-        # Testing non-existed args
+        # Testing additional args
         response = client.get(url, query_string={
             "age": 19,
             "health": 1,
@@ -59,6 +59,14 @@ def test_predict_route():
         response = client.get(url, query_string={
             "age": 'NaN',
             "health": 1,
+            "absences": 17,
+        })
+
+        assert response.status_code == 400
+
+        # Testing special characters
+        response = client.get(url, query_string={
+            "age": '1&health=2',
             "absences": 17,
         })
 

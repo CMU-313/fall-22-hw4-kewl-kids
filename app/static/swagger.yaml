@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: API for Carnegie Mellon Success Predictor
-  description: Various (maybe just one) endpoint for communicating with a server
+  description: Various endpoints for communicating with a server
     for predicting the success of CMU applicants
 tags:
 - name: Predictors
@@ -11,20 +11,38 @@ paths:
     get:
       tags:
       - Predictors
-      description: predicts stuff
+      description: Predicts the final grade of a CMU applicant through various metrics
       parameters:
         - name: age
           in: query
-          type: integer
-          description: The age of the applicant as an integer
+          type: integer 
+          minimum: 15
+          maximum: 22
+          required: true
+          description: The age of the applicant as an integer between 15 and 22
         - name: health
           in: query
           type: integer
+          minimum: 0
+          maximum: 10
+          required: true
           description: The health of the applicant as an integer in 0-10 scale
         - name: absenses
           in: query
           type: integer
-          description: The number of absenses of this applicant
+          mininmum: 0
+          maximum: 93
+          required: true
+          description: The number of absenses of this applicant between 0 and 93
       responses:
         200:
-          description: Successful response 
+          description: Successfully returned a grade prediction
+          schema: 
+            $ref: '#/definitions/Grade' 
+
+definitions:
+  Grade:
+    type: integer
+    minimum: 0
+    maximum: 20
+    example: 17

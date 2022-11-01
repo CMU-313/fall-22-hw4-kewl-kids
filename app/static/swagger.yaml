@@ -11,22 +11,30 @@ paths:
     get:
       tags:
       - Predictors
-      description: Predicts the final grade of a CMU applicant through various metrics
+      description: |
+        Predicts the final grade of a CMU applicant through various metrics. Metrics were chosen to represent a wide range of variables, including variables usually within the applicant's control (failures, absenses, activites), and variables not within the applicant's control (access to internet, mother's education, father's education).
       parameters:
-        - name: age
+        - name: studytime
           in: query
           type: integer 
-          minimum: 15
-          maximum: 22
+          minimum: 1
+          maximum: 4
           required: true
-          description: The age of the applicant as an integer between 15 and 22
-        - name: health
+          description: |
+            Weekly study time 
+            1 - less than 2 hours
+            2 - 2 to 5 hours
+            3 - 5 to 10 hours
+            4 - greater than 10 hours
+        - name: failures
           in: query
           type: integer
-          minimum: 0
-          maximum: 10
+          minimum: 1
+          maximum: 4
           required: true
-          description: The health of the applicant as an integer in 0-10 scale
+          description: |
+            Number of past class failures
+            n if 1 <= n <= 3, otherwise 4
         - name: absenses
           in: query
           type: integer
@@ -34,11 +42,49 @@ paths:
           maximum: 93
           required: true
           description: The number of absenses of this applicant between 0 and 93
+        - name: activities
+          in: query
+          type: boolean
+          required: true
+          description: Whether or not the applicant participates in extracurricular activities
+        - name: internet
+          in: query
+          type: boolean
+          required: true
+          description: Whether or not the applicant has internet access at home
+        - name: medu
+          in: query
+          type: integer
+          required: true
+          minimum: 0
+          maximum: 4
+          description: |
+            Mother's education
+            0 - none
+            1 - primary education (4th grade)
+            2 – 5th to 9th grade
+            3 - secondary education
+            4 – higher education
+        - name: fedu
+          in: query
+          type: integer
+          required: true
+          minimum: 0
+          maximum: 4
+          description: |
+            Father's education
+            0 - none
+            1 - primary education (4th grade)
+            2 – 5th to 9th grade
+            3 - secondary education
+            4 – higher education
       responses:
         200:
           description: Successfully returned a grade prediction
           schema: 
-            $ref: '#/definitions/Grade' 
+            $ref: '#/definitions/Grade'
+        400:
+          description: Bad request. Either required query parameters are not all present or a query parameter's value is invalid
 
 definitions:
   Grade:

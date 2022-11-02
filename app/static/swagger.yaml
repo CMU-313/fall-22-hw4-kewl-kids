@@ -12,7 +12,14 @@ paths:
       tags:
       - Predictors
       description: |
-        Predicts the final grade of a CMU applicant through various metrics. Metrics were chosen to represent a wide range of variables, including variables usually within the applicant's control (failures, absenses, activites), and variables not within the applicant's control (access to internet, mother's education, father's education).
+        Predicts the final grade of a CMU applicant through various metrics.
+        Metrics were chosen for two goals:
+        - accurately represent an applicant's academic background, and 
+        - Provide additional context on factors and conditions outside of the applicant's control.
+        
+        Thus, we chose the following fields to consider initially:
+        Academic Background: failures, absences, activites
+        Additional environment context: access to internet, mother's education, father's education.
       parameters:
         - name: studytime
           in: query
@@ -35,13 +42,13 @@ paths:
           description: |
             Number of past class failures
             n if 1 <= n <= 3, otherwise 4
-        - name: absenses
+        - name: absences
           in: query
           type: integer
           mininmum: 0
           maximum: 93
           required: true
-          description: The number of absenses of this applicant between 0 and 93
+          description: The number of absences of this applicant between 0 and 93
         - name: activities
           in: query
           type: boolean

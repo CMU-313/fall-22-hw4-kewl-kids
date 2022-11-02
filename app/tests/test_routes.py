@@ -33,7 +33,9 @@ def test_predict_route():
         })
 
         assert response.status_code == 200
-
+        assert int(response.data.strip()) >= 0
+        assert int(response.data.strip()) <= 20 
+        
         # Testing missing args
         
         response = client.get(url, query_string={

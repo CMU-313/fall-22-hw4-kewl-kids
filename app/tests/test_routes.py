@@ -24,10 +24,10 @@ def test_predict_route():
 
 
         response = client.get(url, query_string={
-            "fedu": 3,
+            "Fedu": 3,
             "G1": 16, 
             "G2": 16,
-            "medu": 3,
+            "Medu": 3,
             "absences": 20,
             "studytime": 1,
             "activities": 1,
@@ -42,10 +42,10 @@ def test_predict_route():
         # Testing missing args
         
         response = client.get(url, query_string={
-            "fedu": 3,
+            "Fedu": 3,
             "G1": 16,
             "G2": 16,
-            "medu": 3,
+            "Medu": 3,
             "absences": 20,
             "studytime": 1,
             "activities": 1,
@@ -56,10 +56,10 @@ def test_predict_route():
 
         # Testing additional args
         response = client.get(url, query_string={
-            "fedu": 3,
+            "Fedu": 3,
             "G1": 16,
             "G2": 16,
-            "medu": 3,
+            "Medu": 3,
             "absences": 20,
             "studytime": 1,
             "activities": 1,
@@ -72,10 +72,10 @@ def test_predict_route():
 
         # Testing invalid arg type
         response = client.get(url, query_string={
-            "fedu": "NaN",
+            "Fedu": "NaN",
             "G1": 16,
             "G2": 16,
-            "medu": 3,
+            "Medu": 3,
             "absences": 20,
             "studytime": 1,
             "activities": 1,
@@ -87,27 +87,24 @@ def test_predict_route():
 
         # Testing special characters
         response = client.get(url, query_string={
-            "fedu": '1&G1=1',
+            "Fedu": '1&',
             "G1": 16,
             "G2": 16,
-            "medu": 3,
+            "Medu": 3,
             "absences": 20,
             "studytime": 1,
             "activities": 1,
             "failures": 1,
             "internet": 1,
         })
-
-        assert response.status_code == 400
-
-        # Testing malformed request body
-        response = client.get(url, query_string=[1, 16, 16, 3, 20, 1, 1, 1, 1])
-
         assert response.status_code == 400
 
 def test_invalid_address():
     with app.test_client() as client:
         # Testing invalid address
-        response = client.get('/change')
+        response = client.get('/destory')
+        assert response.status_code == 404
 
+        # Testing invalid address
+        response = client.get('/predict/studytime/1/failures/1')
         assert response.status_code == 404

@@ -12,13 +12,13 @@ paths:
       tags:
       - Predictors
       description: |
-        Predicts the final grade of a CMU applicant through various metrics.
+        Predicts whether a CMU applicant is a high-quality student through various metrics.
         Metrics were chosen for two goals:
         - accurately represent an applicant's academic background, and 
         - Provide additional context on factors and conditions outside of the applicant's control.
         
         Thus, we chose the following fields to consider initially:
-        *Academic Background*: amount of time studied, failures, absences, activites
+        *Academic Background*: amount of time studied, failures, absences, activites, first period grade, second period grade
         *Additional environment context*: access to internet, mother's education, father's education.
 
         *(Note: We chose not to include fields related to personal relationships because
@@ -54,14 +54,24 @@ paths:
           description: The number of absences of this applicant between 0 and 93
         - name: activities
           in: query
-          type: boolean
+          type: integer
           required: true
-          description: Whether or not the applicant participates in extracurricular activities
+          description: Whether or not the applicant participates in extracurricular activities (0 - no, 1 - yes)
+        - name: G1
+          in: query
+          type: integer
+          required: true
+          description: First period grade from 0 to 20
+        - name: G2
+          in: query
+          type: integer
+          required: true
+          description: Second period grade from 0 to 20
         - name: internet
           in: query
-          type: boolean
+          type: integer
           required: true
-          description: Whether or not the applicant has internet access at home
+          description: Whether or not the applicant has internet access at home (0 - no, 1 - yes)
         - name: medu
           in: query
           type: integer
@@ -90,15 +100,16 @@ paths:
             4 – higher education
       responses:
         200:
-          description: Successfully returned a grade prediction
+          description: Successfully returned a prediction
           schema: 
-            $ref: '#/definitions/Grade'
+            $ref: '#/definitions/high-quality-student'
         400:
           description: Bad request. Either required query parameters are not all present or a query parameter's value is invalid
 
 definitions:
-  Grade:
+  high-quality-student:
     type: integer
     minimum: 0
-    maximum: 20
-    example: 17
+    maximum: 1
+    example: 1
+    description: Whether the CMU applicant is a high-quality student (0 - no, 1 - yes)

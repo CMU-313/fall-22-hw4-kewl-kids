@@ -103,3 +103,29 @@ If you're not in the Pipenv shell, then execute the following command from the `
 ```terminal
 pipenv run pytest
 ```
+
+# Model
+The prediction service is implemented through a machine learning model using a random forest classifier, trained on CMU student performance data on the following properties:
+
+Study time
+Class failures
+Class absences
+Extracurricular activities
+Internet access
+Mother’s education
+Father’s education
+G1 (first period) grade
+G2 (second period) grade
+
+Our model predicts whether a CMU applicant is a high-quality student through various metrics.
+
+Metrics were chosen for two goals:
+- accurately represent an applicant's academic background, and 
+- Provide additional context on factors and conditions outside of the applicant's control.
+
+Thus, we chose the following fields to consider initially:
+- Academic Background: amount of time studied, failures, absences, activites, first period grade, second period grade
+- Additional environment context: access to internet, mother's education, father's education.
+
+#### The accuracy of our retrained model improved from 53.57% (baseline) to 96.00%.
+
